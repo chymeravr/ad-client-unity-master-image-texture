@@ -9,33 +9,65 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections;
-using ChimeraVirtualAds.API;
 using UnityEngine;
 using UnityEngine.VR;
+using co.chimeralabs.ads.managed;
 
 namespace ChimeraVirtualAds
 {
 	public static class AdManager
 	{
-		private static Hashtable imageTextureAds = new Hashtable();
-		private static bool isUpdateRequired = true;
-		public static void AddImageTextureAd(ImageTextureAd imageTextureAd){
-			imageTextureAds.Add (imageTextureAd.GetAdId(), imageTextureAd);
-			isUpdateRequired = true;
+		private static Hashtable adUnits = new Hashtable();
+		private static Hashtable adInstances = new Hashtable ();
+		private static Hashtable instancesByUnits = new Hashtable ();
+		static AdManager(){
+			PlatformObjectsFactoryHolder.SetFactory(new PlatformObjectsFactoryUnity());
 		}
-
-		public static ImageTextureAd GetImageTextureAd(String adId){
-			return (ImageTextureAd)imageTextureAds [adId];
-		}
-
-		public static void Update(AdInstance instance) {
-			ImageTextureAd ad = GetImageTextureAd (instance.GetAdId ());
-			if (!ad.IsTextureGenerated ()) {
-				ad.GenerateTexture();
-				ad.DisplayTexture();
+		public static void RegisterImageTextureAdUnit(ImageTextureAdInstanceUnity instance, int nDistinctAds){
+			if (adInstances [instance.GetAdInstanceId ()] == null) {
+				adInstances.Add(instance.GetAdInstanceId(), instance);
+				if(instancesByUnits[instance.GetAdUnitId()] == null) {
+					instancesByUnits.Add(instance.GetAdUnitId(), new ArrayList());
+				}
+				((ArrayList)instancesByUnits[instance.GetAdUnitId()]).Add(instance.GetAdInstanceId());
+			} else { //duplicate adinstanceid
 			}
-			if (instance.IsInstanceDisplayed ()) {
-				instance.UpdateVisibilityMetric ();
+			if (adUnits [instance.GetAdUnitId()] == null) {
+				ImageTextureAdUnitListener listener = new ImageTextureAdUnitListener();
+				ImageTextureAdUnit adUnit = new ImageTextureAdUnit(listener, instance.GetAdUnitId());
+				adUnits.Add(instance.GetAdUnitId(), adUnit);
+				adUnit.LoadAds (nDistinctAds);
+			}
+		}
+		public static ArrayList GetInstanceIdsByAdUnitId(String adUnitId){
+			return (ArrayList)instancesByUnits [adUnitId];
+		}
+		public static Hashtable GetAdUnitsHashTable(){
+			return adUnits;
+		}
+		public static ImageTextureAdInstanceUnity GetImageTextureAdInstanceUnity(String adInstanceId){
+			return (ImageTextureAdInstanceUnity)adInstances [adInstanceId];
+		}
+	}
+	public class ImageTextureAdUnitListener : AdUnitListener
+	{
+		public void OnAdUnitLoadFailed(AdUnitFailedArgs args)
+		{
+			ArrayList instanceIds = AdManager.GetInstanceIdsByAdUnitId (args.adUnitId);
+			foreach (String instanceId in instanceIds) {
+				ImageTextureAdInstanceUnity instance = AdManager.GetImageTextureAdInstanceUnity(instanceId);
+				instance.CallOnAdUnitLoadFailed(args);
+			}
+		}
+		public void OnAdUnitLoaded(System.Object context)
+		{
+			//AdManager.GetAdsLoaded ().Add ( ((ImageTextureAdUnit)context).GetAdUnitId() , true);
+			ImageTextureAdUnit adUnit = (ImageTextureAdUnit)context;
+			ArrayList instanceIds = AdManager.GetInstanceIdsByAdUnitId (adUnit.GetAdUnitId());
+			foreach (String instanceId in instanceIds) {
+				ImageTextureAdInstanceUnity instance = AdManager.GetImageTextureAdInstanceUnity(instanceId);
+				instance.SetInstance(adUnit.CreateInstance(instance.GetAdInstanceId(), instance.GetAdObject()));
+				instance.CallOnAdUnitLoaded();
 			}
 		}
 	}

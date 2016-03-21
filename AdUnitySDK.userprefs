@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AdUnitySDK\AdObjectUnity.cs">
+    <Files>
+      <File FileName="..\AdUnity\Assets\ChimeraVirtualAds\AdCreationScript.cs" Line="42" Column="18" />
+      <File FileName="AdUnitySDK\AdManager.cs" Line="42" Column="23" />
+      <File FileName="AdUnitySDK\ImageTextureAdInstanceUnity.cs" Line="38" Column="20" />
+      <File FileName="AdUnitySDK\TextureUnity.cs" Line="1" Column="1" />
+      <File FileName="AdUnitySDK\AdObjectUnity.cs" Line="24" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
