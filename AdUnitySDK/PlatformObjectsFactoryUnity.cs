@@ -19,6 +19,15 @@ namespace ChimeraVirtualAds
 		public ITexture GetTextureObject(){
 			return new TextureUnity ();
 		}
+		public IPlatform GetPlatformImplementations(){
+			#if UNITY_STANDALONE_WIN
+				return new PlatformPCWindowsImpl();
+			#elif UNITY_EDITOR_WIN
+				return new PlatformPCWindowsImpl();
+			#else
+				return new PlatformPCWindowsImpl();
+			#endif
+		}
 	}
 }
 

@@ -44,11 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="AdManager.cs" />
     <Compile Include="TextureUnity.cs" />
     <Compile Include="PlatformObjectsFactoryUnity.cs" />
     <Compile Include="AdObjectUnity.cs" />
     <Compile Include="ImageTextureAdInstanceUnity.cs" />
+    <Compile Include="AdManagerUnity.cs" />
+    <Compile Include="PlatformPCWindowsImpl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Implementations\" />
+  </ItemGroup>
 </Project>
