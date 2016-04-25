@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\AdUnity\Assets\ChimeraVirtualAds\AdCreationScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AdUnitySDK\AdManagerUnity.cs">
     <Files>
-      <File FileName="..\AdUnity\Assets\ChimeraVirtualAds\AdCreationScript.cs" Line="45" Column="50" />
+      <File FileName="..\AdUnity\Assets\ChimeraVirtualAds\AdCreationScript.cs" Line="33" Column="18" />
+      <File FileName="AdUnitySDK\PlatformPCWindowsImpl.cs" Line="92" Column="5" />
+      <File FileName="AdUnitySDK\AdManagerUnity.cs" Line="25" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

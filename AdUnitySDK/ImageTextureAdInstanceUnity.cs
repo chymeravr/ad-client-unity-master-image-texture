@@ -58,7 +58,9 @@ namespace ChimeraVirtualAds
 			if (this.isAdLoaded) {
 				if (!this.isAdDisplayed) {
 					this.isAdDisplayed = true;
-					adObjectUnity.GetAdObject ().GetComponent<Renderer> ().material.mainTexture = ((TextureUnity)instance.GetDiffuseTexture ()).GetTextureObject ();
+					Material material = adObjectUnity.GetAdObject ().GetComponent<Renderer> ().material;
+					material.SetFloat("_Glossiness", 0.0f);
+					material.mainTexture = ((TextureUnity)instance.GetDiffuseTexture ()).GetTextureObject ();
 				}
 				instance.UpdateVisibilityMetric ();
 			}

@@ -22,9 +22,10 @@ namespace ChimeraVirtualAds
 		private static Hashtable instancesByUnits = new Hashtable ();
 		private static Boolean isStartupDone = false;
 		private static Boolean isShutdownDone = false;
-		public static void Startup(){
+		public static void Startup(String appId){
 			if (!isStartupDone) {
 				isStartupDone = true;
+				AdConfigurer.SetAppId(appId);
 				AdConfigurer.Startup (new PlatformPCWindowsImpl());
 				PlatformObjectsFactoryHolder.SetFactory (new PlatformObjectsFactoryUnity ());
 			}
